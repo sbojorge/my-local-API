@@ -16,3 +16,14 @@ class PostListViewTest(APITestCase):
         print(response.data)
         print(len(response.data))
 
+    def test_logged_in_user_can_create_post(self):
+        self.client.login(username='sara', password='pass')
+        response = self.client.post('/posts/', {'title': 'a title'})
+        count = Post.objects.count()
+        self.assertEqual(count, 1)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    
+    def test_logged_out_user_cannot_create_post(self):
+        response = self.client.post('/posts/', {'title': 'a title'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
