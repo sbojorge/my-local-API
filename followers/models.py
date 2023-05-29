@@ -26,6 +26,6 @@ class Follower(models.Model):
         unique_together = ['owner', 'followed']
 
     def __str__(self):
-        return f'{self.owner} {self.post}'
+        return f'{self.owner} {self.followed}'
 
 
